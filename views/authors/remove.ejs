@@ -9,8 +9,8 @@
 		<% include ../partials/header %>
 	</header>
 	<% include ../partials/authors %>
-	<button method='POST' action='/authors/delete/<%= authors[0].id %>?_method=DELETE'>
+	<form method='POST' action='/authors/delete/<%= authors[0].id %>?_method=DELETE'>
 		<input type='submit' value="Delete <%= authors[0].name %>?">
-	</button>
+	</form>
 </body>
 </html>
