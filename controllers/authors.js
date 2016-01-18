@@ -24,6 +24,16 @@ router.get('/', function(req, res) {
 	});
 });	
 
+router.get('/new', function(req, res) {
+	res.render('../views/authors/new');
+});
+
+router.post('/new', function(req, res) {
+	knex('authors').insert({name: req.body.name}).then(function(result) {
+		res.redirect('/');
+	});
+});
+
 router.get('/:id', function(req, res) {
 	knex('authors').where({id: req.params.id})
 	.then(function(author) {				
@@ -33,16 +43,6 @@ router.get('/:id', function(req, res) {
 			console.log('books', books);
 			res.render('../views/authors/author', {authors: author});
 		});
-	});
-});
-
-router.get('/new', function(req, res) {
-	res.render('../views/authors/new');
-});
-
-router.post('/new', function(req, res) {
-	knex('authors').insert({name: req.body.name}).then(function(result) {
-		res.redirect('/');
 	});
 });
 

@@ -1,39 +1,42 @@
-<div class='col-md-8'>	
-	<% authors.forEach(function(author) { %>
-	<div class='row'>
-		<div class='col-md-4'>
-			<h4><a href="/authors/<%= author.id %>"><%= author.name %></a></h4>
+<div class='row'>
+		<% include ../partials/sidebar %>
+		<div class='col-md-8'>	
+			<% authors.forEach(function(author) { %>
+			<div class='row'>
+				<div class='col-md-4'>
+					<h4><a href="/authors/<%= author.id %>"><%= author.name %></a></h4>
+				</div>
+				<div class='col-md-1'>
+					<form method='GET' action="/authors/update/<%= author.id %>">
+						<input type='submit' value="Edit">
+					</form>
+				</div>
+				<div class='col-md-1'>
+					<form method='POST' action='/authors/delete/<%= author.id %>?_method=DELETE'>
+						<input type='submit' value="Remove">
+					</form>
+				</div>
+			</div>
+			<div class='row'>
+				<div class='col-md-6'>
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Books</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% author.books.forEach(function(book) { %>
+							<tr>
+								<td>
+									<a href="/books/<%= book.id %>"><%= book.title %></a>
+								</td>
+							</tr>
+							<% }); %>
+						</tbody>
+					</table>	
+				</div>
+			</div>
+			<% }); %>
 		</div>
-		<div class='col-md-1'>
-			<form method='GET' action="/authors/update/<%= author.id %>">
-				<input type='submit' value="Edit">
-			</form>
-		</div>
-		<div class='col-md-1'>
-			<form method='POST' action='/authors/delete/<%= author.id %>?_method=DELETE'>
-				<input type='submit' value="Remove">
-			</form>
-		</div>
-	</div>
-	<div class='row'>
-		<div class='col-md-6'>
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th>Books</th>
-					</tr>
-				</thead>
-				<tbody>
-					<% author.books.forEach(function(book) { %>
-					<tr>
-						<td>
-							<a href="/books/<%= book.id %>"><%= book.title %></a>
-						</td>
-					</tr>
-					<% }); %>
-				</tbody>
-			</table>	
-		</div>
-	</div>
-	<% }); %>
-</div>
+	</div>	
