@@ -10,6 +10,38 @@ router.get('/', function(req, res) {
 	});
 });
 
+router.get('/new', function(req, res) {
+	res.render('../views/books/new');
+});
+
+router.post('/new', function(req, res) {
+	var title = req.body.title,
+		category = req.body.category,
+		url = req.body.url,
+		description = req.body. description;
+	knex('categories').where({name: category})
+	.then(function(result) {
+		if(result.length === 0) {
+			knex('categories').insert({name: category}).returning('id')
+			.then(function(id) {
+				addBook(title, id, url, description, res);
+			});
+		} else {
+			addBook(title, result[0].id, url, description, res);
+		}
+	})
+});
+
+function addBook (title, categoryId, url, description, res) {
+	knex('books').insert({title: title, cover_art_url: url, description: description}).returning('id')
+	.then(function(id){
+		knex('books_categories').insert({book_id: id[0], category_id: categoryId[0]})
+		.then(function() {
+			res.redirect('/books');
+		})
+	});
+}
+
 router.get('/:id', function(req, res) {
 	var bookId = req.params.id;
 	knex('books').where({id: bookId})
@@ -25,7 +57,6 @@ router.get('/:id', function(req, res) {
 					res.render('../views/books/update', {book: book[0], categories: categories});
 			});
 		});
-		
 	});	
 });
 
@@ -74,6 +105,5 @@ router.delete('/categories/:categoryId', function(req, res) {
         res.redirect('/books');
     });
 });
-
 
 module.exports = router;

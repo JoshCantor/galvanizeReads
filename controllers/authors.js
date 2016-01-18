@@ -86,11 +86,5 @@ router.delete('/delete/:id', function(req, res) {
     });
 });
 
-router.post('/:id/new-book', function(req, res) {
-	knex('books').insert({title: req.body.title, author_id: req.params.id})
-	.then(function(){
-		res.redirect('/authors');
-	});
-});
 
 module.exports = router;
