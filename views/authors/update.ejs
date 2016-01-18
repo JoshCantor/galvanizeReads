@@ -2,8 +2,12 @@
 <html>
 <head>
 	<title>Update Author Name or Add Book</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body>
+	<header>
+		<% include ../partials/header %>
+	</header>
 	<h1>Update existing author name or add book by that author</h1>
 	<form method='POST' action='/authors/<%= author.id %>?_method=PUT'>
 		Edit Name: <input type='text' name='name' value='<%= author.name %>'>
