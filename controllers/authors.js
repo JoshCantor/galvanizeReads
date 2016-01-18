@@ -67,6 +67,18 @@ router.put('/:id', function(req, res) {
     });
 });
 
+router.get('/delete/:id', function(req, res) {
+	knex('authors').where({id: req.params.id})
+	.then(function(author) {				
+		knex('books').where({author_id: author[0].id})
+		.then(function(books) {
+			author[0].books = books;
+			console.log('books', books);
+			res.render('../views/authors/remove', {authors: author});
+		});
+	});
+})
+
 router.delete('/delete/:id', function(req, res) {
 	knex('authors').where({id:req.params.id}).del()
     .then(function(result) {
