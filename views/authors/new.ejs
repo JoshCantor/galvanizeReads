@@ -12,13 +12,9 @@
 	<div class='col-md-6'>
 		<form method="POST" action='/authors/new'>
 			<fieldset class="form-group">
-			    <label for="firstName">First Name:</label>
+			    <label for="name">Name:</label>
 			    <br>
-			    <input type="text" class="form-control" name="firstName" id="firstName" >
-			    <br>
-			    <label for="lastName">Last Name:</label>
-			    <br>
-			    <input type="text" class="form-control" name="lastName" id="lastName" >
+			    <input type="text" class="form-control" name="name" id="name" >
 			    <br>
 			    <label for="url">Portait URL:</label>
 			    <br>
@@ -27,30 +23,7 @@
 			    <label for="bio">Biography</label>
 			    <br>
 			    <textarea class="form-control" name="bio" id="bio"></textarea>
-			    <div class="row">
-			    	<div class="col-md-11">
-			    		<label for="bookList">Books</label>
-			    		<br>
-			    		<textarea type="text" class="form-control" name="bookList" id="bookList"></textarea>
-			    	</div>
-			    	<div class="col-md-1">
-			    		<form method="POST" action=" <!-- insert url --> ">
-			    			<input type='submit' value='remove'>
-			    		</form>
-			    	</div>
-			    </div> 
-			    <br>
-			    <div class="row">
-			    	<div class="col-md-6">
-			    		<input type="text" class="form-control" name="newBooks" id="newBooks" >
-			    	</div>
-			    	<div class="col-md-6">
-			    		<form method="POST" action=" <!-- insert url --> ">
-			    			<input type='submit' value='Add Book'>
-			    		</form>
-			    	</div>
-			    </div>
-			    <br>
+			    
 			    <button type='submit'>Add Books</button>
 			</fieldset>
 		</form>

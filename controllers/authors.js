@@ -29,7 +29,10 @@ router.get('/new', function(req, res) {
 });
 
 router.post('/new', function(req, res) {
-	knex('authors').insert({name: req.body.name}).then(function(result) {
+	var name = req.body.name,
+		portraitUrl = req.body.url,
+		bio = req.body.bio;
+	knex('authors').insert({name: name, portrait_url: portraitUrl, biography: bio}).then(function(result) {
 		res.redirect('/');
 	});
 });
