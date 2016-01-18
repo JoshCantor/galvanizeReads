@@ -15,14 +15,26 @@ router.get('/', function(req, res) {
 					author.books = books;
 					authorsBooks += 1;
 					if (authorsBooks === authors.length) {
-						console.log('authors',authors);
-						res.render('../views/authors/index', {authors: authors});
+						console.log('authors', authors);
+						res.render('../views/authors/list', {authors: authors});
 					}
 				});
 			});
 		}
 	});
 });	
+
+router.get('/:id', function(req, res) {
+	knex('authors').where({id: req.params.id})
+	.then(function(author) {				
+		knex('books').where({author_id: author[0].id})
+		.then(function(books) {
+			author[0].books = books;
+			console.log('books', books);
+			res.render('../views/authors/author', {authors: author});
+		});
+	});
+});
 
 router.get('/new', function(req, res) {
 	res.render('../views/authors/new');
