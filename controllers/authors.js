@@ -51,12 +51,17 @@ router.get('/:id', function(req, res) {
 
 router.get('/update/:id', function(req, res) {
 	knex('authors').where({id: req.params.id}).then(function(author) {
+		console.log(author[0]);
 		res.render('../views/authors/update', {author:author[0]});
 	});
 });
 
 router.put('/:id', function(req, res) {
-    knex('authors').where({id:req.params.id}).update(req.body)
+	var id = req.params.id,
+		name = req.body.name,
+		url = req.body.url,
+		bio = req.body.bio;
+    knex('authors').where({id: id}).update({name: name, portrait_url: url, biography: bio})
     .then(function(){
         res.redirect('/authors');
     });

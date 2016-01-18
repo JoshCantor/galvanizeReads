@@ -8,15 +8,24 @@
 	<header>
 		<% include ../partials/header %>
 	</header>
-	<h1>Update existing author name or add book by that author</h1>
-	<form method='POST' action='/authors/<%= author.id %>?_method=PUT'>
-		Edit Name: <input type='text' name='name' value='<%= author.name %>'>
-		<input type='submit' value="Edit Name">
-	</form>
-	<h2>OR</h2>
-	<form method='POST' action='/authors/<%= author.id %>/new-book'>
-		Add New Books: <input type='text' name='title'>
-		<input type='submit' value="Add Books">
-	</form>
+	<% include ../partials/sidebar %>
+	<div class='col-md-6'>
+		<form method="POST" action='/authors/<%= author.id %>?_method=PUT'>
+			<fieldset class="form-group">
+			    <label for="name">Name:</label>
+			    <br>
+			    <input type="text" class="form-control" name="name" id="name" value='<%= author.name %>'> 
+			    <br>
+			    <label for="url">Portait URL:</label>
+			    <br>
+			    <input type="text" class="form-control" name="url" id="url" value='<%= author.portrait_url %>' >
+			    <br>
+			    <label for="bio">Biography</label>
+			    <br>
+			    <textarea class="form-control" name="bio" id="bio" placeholder='<%= author.biography %>'></textarea>
+			    <button type='submit'>Edit Author <%= author.name %></button>
+			</fieldset>
+		</form>
+	</div>
 </body>
 </html>
