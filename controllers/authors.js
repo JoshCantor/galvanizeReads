@@ -10,8 +10,9 @@ router.get('/', function(req, res) {
 		} else {
 			var authorsBooks = 0;
 			authors.forEach(function(author) {
-				knex('books').where({author_id: author.id})
+				knex('authors_books').where({author_id: author.id}).returning('book_id')
 				.then(function(books) {
+					console.log('ids', books)
 					author.books = books;
 					authorsBooks += 1;
 					if (authorsBooks === authors.length) {
