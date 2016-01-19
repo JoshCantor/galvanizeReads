@@ -12,7 +12,15 @@ router.get('/', function(req, res) {
 			authors.forEach(function(author) {
 				knex('authors_books').where({author_id: author.id}).returning('book_id')
 				.then(function(books) {
-					console.log('ids', books)
+					var bookIds = [];
+					books.forEach(function(book) {
+						bookIds.push(book.id);
+					});
+					console.log('ids', bookIds);
+					knex.select('title').from('books').whereIn('id', bookIds)
+					.then(function(titles) {
+						console.log('TIIIITLES', titles);
+					})
 					author.books = books;
 					authorsBooks += 1;
 					if (authorsBooks === authors.length) {
