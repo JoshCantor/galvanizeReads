@@ -12,15 +12,16 @@ router.get('/', function(req, res) {
 			authors.forEach(function(author) {
 				knex('authors_books').where({author_id: author.id}).returning('book_id')
 				.then(function(books) {
-					var bookIds = [];
-					books.forEach(function(book) {
-						bookIds.push(book.id);
-					});
-					console.log('ids', bookIds);
-					knex.select('title').from('books').whereIn('id', bookIds)
-					.then(function(titles) {
-						console.log('TIIIITLES', titles);
-					})
+					// below need work getting books to render
+					// var bookIds = [];
+					// books.forEach(function(book) {
+					// 	bookIds.push(book.id);
+					// });
+					// console.log('ids', bookIds);
+					// knex.select('title').from('books').whereIn('id', bookIds)
+					// .then(function(titles) {
+					// 	console.log('TIIIITLES', titles);
+					// })
 					author.books = books;
 					authorsBooks += 1;
 					if (authorsBooks === authors.length) {
@@ -93,13 +94,9 @@ router.put('/:id', function(req, res) {
 
 router.get('/delete/:id', function(req, res) {
 	knex('authors').where({id: req.params.id})
-	.then(function(author) {				
-		knex('books').where({author_id: author[0].id})
-		.then(function(books) {
-			author[0].books = books;
-			console.log('books', books);
-			res.render('../views/authors/remove', {authors: author});
-		});
+	.then(function(author) {
+		author.books = [];				
+		res.render('../views/authors/remove', {authors: author});
 	});
 })
 
