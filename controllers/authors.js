@@ -25,15 +25,30 @@ router.get('/', function(req, res) {
 });	
 
 router.get('/new', function(req, res) {
-	res.render('../views/authors/new');
+	knex('books').then(function(books) {
+		res.render('../views/authors/new', {books: books});
+	})
 });
 
 router.post('/new', function(req, res) {
 	var name = req.body.name,
 		portraitUrl = req.body.url,
-		bio = req.body.bio;
-	knex('authors').insert({name: name, portrait_url: portraitUrl, biography: bio}).then(function(result) {
-		res.redirect('/');
+		bio = req.body.bio,
+		bookIds = req.body.bookList;
+	knex('authors').insert({name: name, portrait_url: portraitUrl, biography: bio})
+	.returning('id').then(function(authorId) { 
+		console.log('authorId', authorId);
+		var bookCounter = 0;
+		bookIds.forEach(function(bookId) {
+			console.log('bookId', bookId);
+			knex('authors_books').insert({author_id: authorId[0], book_id: bookId})
+			.then(function() {
+				bookCounter += 1;
+				if (bookCounter === bookIds.length) {
+					res.redirect('/');
+				}
+			});
+		});	
 	});
 });
 

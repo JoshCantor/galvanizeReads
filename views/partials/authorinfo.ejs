@@ -11,8 +11,21 @@
 		    <br>
 		    <label for="bio">Biography</label>
 		    <br>
-		    <textarea class="form-control" name="bio" id="bio"></textarea>
-		    <button type='submit'>Add Author</button>
+		    <textarea class="form-control" name="bio" id="bio"></textarea>  		
+		    <br>
+		    <div class="row">
+			    <div class="col-md-6">
+			    	<label for="bookList">Books</label>
+			    	<br>
+			    	<select multiple class="form-control" name="bookList" id="bookList">
+		 	    		<% books.forEach(function(book) { %>
+		     				<option value='<%= book.id %>'><%= book.title %></option>
+		     			<% }) %>
+			    	</select>
+			    </div>
+		    </div>
+		    <br>
+		    <input type='submit' value='Add Author'>
 		</fieldset>
 	</form>
 </div>
